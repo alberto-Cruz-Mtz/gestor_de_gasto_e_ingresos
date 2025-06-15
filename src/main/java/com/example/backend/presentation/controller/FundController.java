@@ -26,8 +26,8 @@ public class FundController {
 
     private final FundService service;
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Response<FundResponse>> createNewFund(@RequestBody @Valid FundRequest request, @PathVariable(name = "id") String userId){
+    @PostMapping
+    public ResponseEntity<Response<FundResponse>> createNewFund(@RequestBody @Valid FundRequest request, @RequestParam String userId){
         FundResponse response = service.createFund(request, userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new Response<>(response, "fondo creado exitosamente"));
@@ -45,9 +45,8 @@ public class FundController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Response<List<FundResponse>>> findAll(@PathVariable(name = "id") String userId){
-
+    @GetMapping
+    public ResponseEntity<Response<List<FundResponse>>> findAll(@RequestParam String userId){
         return ResponseEntity.ok(new Response<>(service.getFunds(userId), "fondos cargados"));
     }
 }
