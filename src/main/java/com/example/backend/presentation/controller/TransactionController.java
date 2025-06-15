@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,27 +32,27 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionResponse);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<TransactionResponse> updateTransaction(@RequestBody @Valid TransactionRequest request, @PathVariable Long id) {
-        TransactionResponse transactionResponse = service.updateTransaction(request, id);
+    @PatchMapping("/{transactionId}")
+    public ResponseEntity<TransactionResponse> updateTransaction(@RequestBody @Valid TransactionRequest request, @PathVariable Long transactionId) {
+        TransactionResponse transactionResponse = service.updateTransaction(request, transactionId);
         return ResponseEntity.ok(transactionResponse);
     }
 
-    @GetMapping
-    public ResponseEntity<Response<List<TransactionResponse>>> getAllTransactions(@RequestParam String userId, @RequestParam Long fundId) {
-        List<TransactionResponse> list = service.getTransactions(userId, fundId);
+    @GetMapping("/fund/{fundId}")
+    public ResponseEntity<Response<List<TransactionResponse>>> getAllTransactions(@PathVariable Long fundId) {
+        List<TransactionResponse> list = service.getTransactions(fundId);
         return ResponseEntity.ok(new Response<>(list, "fondos cargados"));
     }
 
-    @DeleteMapping("/{fundId}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable Long fundId) {
-        service.deleteTransaction(fundId);
+    @DeleteMapping("/{transactionId}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long transactionId) {
+        service.deleteTransaction(transactionId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Response<TransactionResponse>> getTransaction(@PathVariable Long id) {
-        TransactionResponse response = service.getTransaction(id);
+    @GetMapping("/{transactionId}")
+    public ResponseEntity<Response<TransactionResponse>> getTransaction(@PathVariable Long transactionId) {
+        TransactionResponse response = service.getTransaction(transactionId);
         return ResponseEntity.ok(new Response<>(response, "Transaccion Encontrada"));
     }
 }

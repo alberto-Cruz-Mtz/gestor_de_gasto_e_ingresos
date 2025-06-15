@@ -9,11 +9,11 @@ public interface TransactionService {
 
     TransactionResponse createTransaction(TransactionRequest request, Long fundId);
 
-    TransactionResponse updateTransaction(TransactionRequest request, Long id);
+    TransactionResponse updateTransaction(TransactionRequest request, Long transactionId);
 
-    List<TransactionResponse> getTransactions(String id, Long fundId);
+    List<TransactionResponse> getTransactions(Long fundId);
 
-    void deleteTransaction(Long id);
+    void deleteTransaction(Long transactionId);
 
-    TransactionResponse getTransaction(Long id);
+    TransactionResponse getTransaction(Long transactionId);
 }

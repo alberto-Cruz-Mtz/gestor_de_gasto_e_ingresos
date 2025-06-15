@@ -45,8 +45,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Transactional
     @Override
-    public TransactionResponse updateTransaction(TransactionRequest request, Long id) {
-        TransactionEntity transaction = this.getTransactionEntity(id);
+    public TransactionResponse updateTransaction(TransactionRequest request, Long transactionId) {
+        TransactionEntity transaction = this.getTransactionEntity(transactionId);
         updateFundOnUpdate(transaction.getFund(), transaction, request);
 
         transaction.setAmount(request.amount());
@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<TransactionResponse> getTransactions(String id, Long fundId) {
+    public List<TransactionResponse> getTransactions(Long fundId) {
         return fundRepository
                 .findById(fundId)
                 .stream()
@@ -71,21 +71,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Transactional
     @Override
-    public void deleteTransaction(Long id) {
-        TransactionEntity transaction = this.getTransactionEntity(id);
+    public void deleteTransaction(Long transactionId) {
+        TransactionEntity transaction = this.getTransactionEntity(transactionId);
         updateFundOnDelete(transaction);
         repository.delete(transaction);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public TransactionResponse getTransaction(Long id) {
-        TransactionEntity transaction = this.getTransactionEntity(id);
+    public TransactionResponse getTransaction(Long transactionId) {
+        TransactionEntity transaction = this.getTransactionEntity(transactionId);
         return this.toTransactionResponse(transaction);
     }
 
-    private TransactionEntity getTransactionEntity(Long id) {
-        return repository.findById(id)
+    private TransactionEntity getTransactionEntity(Long transactionId) {
+        return repository.findById(transactionId)
                 .orElseThrow(() -> new NotFoundResourceException("Transaction not found"));
     }
 
