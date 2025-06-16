@@ -25,35 +25,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionController {
 
-    private final TransactionService service;
+  private final TransactionService service;
 
-    @PostMapping
-    public ResponseEntity<TransactionResponse> createTransaction(@RequestBody @Valid TransactionRequest request, @RequestParam Long fundId) {
-        TransactionResponse transactionResponse = service.createTransaction(request, fundId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(transactionResponse);
-    }
+  @PostMapping
+  public ResponseEntity<TransactionResponse> createTransaction(@RequestBody @Valid TransactionRequest request,
+      @RequestParam Long fundId) {
+    TransactionResponse transactionResponse = service.createTransaction(request, fundId);
+    return ResponseEntity.status(HttpStatus.CREATED).body(transactionResponse);
+  }
 
-    @PatchMapping("/{transactionId}")
-    public ResponseEntity<TransactionResponse> updateTransaction(@RequestBody @Valid TransactionRequest request, @PathVariable Long transactionId) {
-        TransactionResponse transactionResponse = service.updateTransaction(request, transactionId);
-        return ResponseEntity.ok(transactionResponse);
-    }
+  @PatchMapping("/{transactionId}")
+  public ResponseEntity<TransactionResponse> updateTransaction(@RequestBody @Valid TransactionRequest request,
+      @PathVariable Long transactionId) {
+    TransactionResponse transactionResponse = service.updateTransaction(request, transactionId);
+    return ResponseEntity.ok(transactionResponse);
+  }
 
-    @GetMapping
-    public ResponseEntity<Response<List<TransactionResponse>>> getAllTransactions(@RequestParam Long fundId) {
-        List<TransactionResponse> list = service.getTransactions(fundId);
-        return ResponseEntity.ok(new Response<>(list, "fondos cargados"));
-    }
+  @GetMapping
+  public ResponseEntity<Response<List<TransactionResponse>>> getAllTransactions(@RequestParam Long fundId) {
+    List<TransactionResponse> list = service.getTransactions(fundId);
+    return ResponseEntity.ok(new Response<>(list, "fondos cargados"));
+  }
 
-    @DeleteMapping("/{transactionId}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable Long transactionId) {
-        service.deleteTransaction(transactionId);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping("/{transactionId}")
+  public ResponseEntity<Void> deleteTransaction(@PathVariable Long transactionId) {
+    service.deleteTransaction(transactionId);
+    return ResponseEntity.noContent().build();
+  }
 
-    @GetMapping("/{transactionId}")
-    public ResponseEntity<Response<TransactionResponse>> getTransaction(@PathVariable Long transactionId) {
-        TransactionResponse response = service.getTransaction(transactionId);
-        return ResponseEntity.ok(new Response<>(response, "Transaccion Encontrada"));
-    }
+  @GetMapping("/{transactionId}")
+  public ResponseEntity<Response<TransactionResponse>> getTransaction(@PathVariable Long transactionId) {
+    TransactionResponse response = service.getTransaction(transactionId);
+    return ResponseEntity.ok(new Response<>(response, "Transaccion Encontrada"));
+  }
 }

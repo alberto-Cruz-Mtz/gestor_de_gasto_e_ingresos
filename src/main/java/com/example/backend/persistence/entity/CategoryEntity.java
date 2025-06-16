@@ -1,7 +1,6 @@
 package com.example.backend.persistence.entity;
 
 import com.example.backend.persistence.model.CategoryTransaction;
-import com.example.backend.persistence.model.TransactionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,15 +20,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "category")
 public class CategoryEntity {
 
-    public CategoryEntity(CategoryTransaction categoryTransaction) {
-        this.categoryTransaction = categoryTransaction;
-    }
+  public CategoryEntity(CategoryTransaction categoryTransaction) {
+    this.categoryTransaction = categoryTransaction;
+  }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, unique = true, nullable = false, name = "name_category")
-    private CategoryTransaction categoryTransaction;
+  @Enumerated(EnumType.STRING)
+  @Column(length = 20, unique = true, nullable = false, name = "name_category")
+  private CategoryTransaction categoryTransaction;
 }
